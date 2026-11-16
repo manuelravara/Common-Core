@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mravara <mravara@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: mcadavez <mcadavez@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/23 11:30:36 by mravara           #+#    #+#             */
-/*   Updated: 2026/10/23 11:30:38 by mravara          ###   ########.fr       */
+/*   Updated: 2026/11/16 12:22:10 by mcadavez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,25 @@
 int	ft_atoi(const char *str)
 {
 	int	number;
+	int	signal;
 
 	number = 0;
+	signal = 1;
 	while ((*str >= '\t' && *str <= '\r') || *str == ' ')
 		str++;
-	if (*str == '-')
+	if (*str == '-' || *str == '+')
 	{
+		if (*str == '-')
+			signal *= -1;
 		str++;
-		while (*str >= '0' && *str <= '9')
-		{
-			number *= 10;
-			number -= (*str - '0');
-			str++;
-		}
 	}
-	else if (*str == '+')
-		str++;
 	while (*str >= '0' && *str <= '9')
 	{
 		number *= 10;
 		number += (*str - '0');
 		str++;
 	}
-	return (number);
+	return (number * signal);
 }
 /*
 int	main(void)

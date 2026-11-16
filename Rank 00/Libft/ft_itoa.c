@@ -12,19 +12,19 @@
 
 #include "libft.h"
 
-static size_t	int_len(int n)
+static size_t	int_len(long nbr)
 {
 	size_t	len;
 
 	len = 0;
-	if (n <= 0)
+	if (nbr <= 0)
 	{
 		len++;
-		n *= -1;
+		nbr *= -1;
 	}
-	while (n)
+	while (nbr)
 	{
-		n /= 10;
+		nbr /= 10;
 		len++;
 	}
 	return (len);
