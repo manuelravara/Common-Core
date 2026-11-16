@@ -35,9 +35,9 @@ static size_t	ft_count_words(char const *s, char c)
 	return (words);
 }
 
-static void	ft_free(char **array, int position)
+static int	ft_free(char **array, size_t position)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (i < position)
@@ -46,13 +46,14 @@ static void	ft_free(char **array, int position)
 		i++;
 	}
 	free(array);
+	return (0);
 }
 
-static void	ft_fill_array(char **array, char const *s, char c)
+static int	ft_fill_array(char **array, char const *s, char c)
 {
 	size_t	len;
-	int		i;
-	int		j;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	j = 0;
@@ -70,10 +71,11 @@ static void	ft_fill_array(char **array, char const *s, char c)
 		{
 			array[j] = ft_substr(s, i - len, len);
 			if (!array[j])
-				ft_free(array, j);
+				return (ft_free(array, j));
+			j++;
 		}
-		j++;
 	}
+	return (1);
 }
 
 char	**ft_split(char const *s, char c)
@@ -83,13 +85,13 @@ char	**ft_split(char const *s, char c)
 
 	if (!s)
 		return (NULL);
-	words = 0;
 	words = ft_count_words(s, c);
 	dest = (char **) malloc((words + 1) * sizeof(char *));
 	if (!dest)
 		return (NULL);
 	dest[words] = NULL;
-	ft_fill_array(dest, s, c);
+	if (!ft_fill_array(dest, s, c))
+		return (NULL);
 	return (dest);
 }
 /*

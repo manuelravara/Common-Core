@@ -29,29 +29,25 @@ static int	ft_found_char(char const *str, char c)
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*dest;
-	int		i;
-	int		j;
-	int		len;
+	size_t	start;
+	size_t	end;
+	size_t	i;
 
-	i = 0;
-	j = 0;
-	len = ft_strlen(s1) - 1;
-	while (s1[i] && ft_found_char(set, s1[i]))
-	{
-		i++;
-	}
-	while (i < len && ft_found_char(set, s1[len]))
-	{
-		len--;
-	}
-	dest = (char *) malloc(sizeof(*s1) * (len - i + 2));
+	if (!s1 || !set)
+		return (NULL);
+	start = 0;
+	while (s1[start] && ft_found_char(set, s1[start]))
+		start++;
+	end = ft_strlen(s1);
+	while (end > start && ft_found_char(set, s1[end - 1]))
+		end--;
+	dest = (char *) malloc(sizeof(char) * (end - start + 1));
 	if (!dest)
 		return (NULL);
-	while (i <= len)
-	{
-		dest[j++] = s1[i++];
-	}
-	dest[j] = '\0';
+	i = 0;
+	while (start < end)
+		dest[i++] = s1[start++];
+	dest[i] = '\0';
 	return (dest);
 }
 /*
